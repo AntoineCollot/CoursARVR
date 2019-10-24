@@ -1,24 +1,23 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Valve.VR;
 
 public class VRControllerInputs : MonoBehaviour
 {
-    SteamVR_TrackedController controller;
+    SteamVR_Action_Boolean booleanAction;
 
-    // Use this for initialization
-    void Start()
+    private void Start()
     {
-        controller = GetComponentInParent<SteamVR_TrackedController>();
+        //On récupère l'action voulue
+        booleanAction = SteamVR_Actions._default.GrabPinch;
 
-        //Subscribe to the trigger clicked event of the controller
-        controller.TriggerClicked += OnTriggerPressedEvent;
-        controller.TriggerUnclicked += OnTriggerReleasedEvent;
+        //on s'abonne à l'événement invoqué lorsque le bouton est appuyé
+        booleanAction[SteamVR_Input_Sources.Any].onStateDown += TriggerPressed;
     }
 
-    // Update is called once per frame
-    void Update()
+    void TriggerPressed(SteamVR_Action_Boolean action, SteamVR_Input_Sources source)
     {
-        
+        //Faire l'action voulue avec le bouton
     }
 }

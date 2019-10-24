@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-interface IInteractable
+public interface IInteractable
 {
-    void OnItemPickedUp(Transform holder);
+    void OnItemPickedUp(Transform sender);
     void OnItemReleased();
 }

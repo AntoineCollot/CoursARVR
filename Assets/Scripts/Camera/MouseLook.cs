@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.XR;
 
 /// MouseLook rotates the transform based on the mouse delta.
 /// Minimum and Maximum values can be used to constrain the possible rotation
@@ -30,6 +31,9 @@ public class MouseLook : MonoBehaviour
     Quaternion originalRotation;
     void Update()
     {
+        if (Input.GetKey(KeyCode.LeftControl))
+            return;
+
         if (axes == RotationAxes.MouseXAndY)
         {
             // Read the mouse input axis
@@ -58,6 +62,10 @@ public class MouseLook : MonoBehaviour
     }
     void Start()
     {
+        //Désactive ce script si un casque VR est activé
+        if (XRDevice.isPresent)
+            enabled = false;
+
         originalRotation = transform.localRotation;
     }
     public static float ClampAngle(float angle, float min, float max)

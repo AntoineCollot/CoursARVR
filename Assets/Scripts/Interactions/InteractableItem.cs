@@ -12,30 +12,25 @@ public class InteractableItem : MonoBehaviour, IInteractable
         rigidbody = GetComponent<Rigidbody>();
     }
 
-    public virtual void OnItemPickedUp(Transform holder)
+    //Appelée par le composant PickUpItems lorsque la main attrape un objet.
+    public virtual void OnItemPickedUp(Transform sender)
     {
+        //On peut mettre le rigidbody en kinematic pour éviter qu'il cogne contre l'environment lorsqu'on le tient.
         rigidbody.isKinematic = true;
         isPickedUp = true;
-        transform.SetParent(holder, true);
-        //StartCoroutine(FollowHolder(holder));
+
+        //On le parente à la main tout en gardant sa position dans le monde.
+        transform.SetParent(sender, true);
     }
 
+    //Appelée par la main lorsqu'on relache l'objet.
     public virtual void OnItemReleased()
     {
-        isPickedUp = false;
+        //On restore son rigidbody dans son état normal.
         rigidbody.isKinematic = false;
+        isPickedUp = false;
+
+        //On le déparente de la main tout en gardant sa position dans le monde.
         transform.SetParent(null, true);
     }
-
-    //protected IEnumerator FollowHolder(Transform holder)
-    //{
-    //    Vector3 offsetPosition = transform.position - holder.position;
-
-    //    while(isPickedUp)
-    //    {
-    //        transform.position = holder.position + offsetPosition;
-
-    //        yield return null;
-    //    }
-    //}
 }
